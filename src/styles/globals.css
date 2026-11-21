@@ -1,0 +1,84 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Colour tokens (RGB channels) — see tailwind.config.js. Light is the default; `.dark` on <html> switches. */
+@layer base {
+  :root {
+    --canvas: 255 255 255;
+    --canvas-2: 246 245 243;
+    --surface: 255 255 255;
+    --surface-2: 241 240 237;
+    --ink: 23 23 23;
+    --ink-2: 38 38 38;
+    --body: 64 64 64;
+    --muted: 87 83 78;
+    --subtle: 120 113 108;
+    --faint: 168 162 158;
+    --line: 23 23 23;
+    color-scheme: light;
+  }
+
+  .dark {
+    --canvas: 0 0 0;
+    --canvas-2: 12 10 10;
+    --surface: 23 21 21;
+    --surface-2: 38 35 35;
+    --ink: 255 255 255;
+    --ink-2: 229 229 229;
+    --body: 212 212 212;
+    --muted: 168 162 158;
+    --subtle: 120 113 108;
+    --faint: 82 82 82;
+    --line: 255 255 255;
+    color-scheme: dark;
+  }
+
+  /* Slightly larger type on big monitors so wide layouts don't feel tiny */
+  @media (min-width: 1920px) {
+    html { font-size: 17px; }
+  }
+
+  html { scroll-behavior: smooth; }
+
+  @keyframes nav-progress {
+    from { width: 0; }
+    to { width: 90%; }
+  }
+
+  body {
+    @apply bg-canvas font-sans text-body antialiased;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold text-ink;
+  }
+}
+
+@layer utilities {
+  /* Bengali text (tagline, product names) */
+  .font-bangla {
+    font-family: var(--font-bangla), var(--font-sans), sans-serif;
+  }
+}
+
+/* ---------- Scroll reveal (see src/components/layout/ScrollReveal.jsx) ---------- */
+html.js-reveal [data-anim] {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s cubic-bezier(0.2, 0.65, 0.3, 1), transform 0.7s cubic-bezier(0.2, 0.65, 0.3, 1);
+}
+html.js-reveal [data-anim='zoom'] { transform: scale(0.94); }
+html.js-reveal [data-anim='left'] { transform: translateX(-32px); }
+html.js-reveal [data-anim].is-visible { opacity: 1; transform: none; }
+
+/* Animation delays for the hero / page headers */
+.anim-delay-100 { animation-delay: 100ms; }
+.anim-delay-200 { animation-delay: 200ms; }
+.anim-delay-300 { animation-delay: 300ms; }
+.anim-delay-400 { animation-delay: 400ms; }
+.anim-delay-500 { animation-delay: 500ms; }
+
+/* Respect visitors who turn animations off in their OS */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+}
